@@ -18,6 +18,10 @@
 			{
 				"command": "iotc.helloWorld",
 				"title": "Hello World"
+			},
+			{
+				"command": "iotc.test",
+				"title": "Test"
 			}
 		]
 	},
