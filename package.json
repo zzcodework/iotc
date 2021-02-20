@@ -10,17 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:iotc.helloWorld"
+		"*"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "iotc.helloWorld",
+				"category": "IOTC",
 				"title": "Hello World"
 			},
 			{
 				"command": "iotc.test",
+				"category": "IOTC",
 				"title": "Test"
 			}
 		]
