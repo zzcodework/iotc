@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TokenResult } from '../common/types';
 
 const subdomain = 'vscode';
-const zzToken = 'SharedAccessSignature sr=24dce127-0fa8-435a-8f36-465c42efb14c&sig=P0tR%2FABzibmApeb7UyNnoyfBovnHiIPBgnGKvM60Cws%3D&skn=zz&se=1645556100510';
+const zzToken = 'exampletoken';
 
 export async function listTokens(): Promise<TokenResult[]> {
     const result = await axios.get(`https://${subdomain}.azureiotcentral.com/api/preview/apiTokens`, {
