@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { connectToCentral } from './service/central';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -34,6 +35,14 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 	));
+
+	/**
+	 * IoTCentral
+	 * 1. Create api token and store locally
+	 * 2. Provision a device/vscode instance
+	 * 3. Send telemetry
+	 * */
+	connectToCentral();
 }
 
 // this method is called when your extension is deactivated
