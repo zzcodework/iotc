@@ -1,33 +1,55 @@
 import axios from 'axios';
-import { TokenResult } from '../common/types';
+import { Roles, TokenResult } from '../common/types';
+import { login } from '../service/login';
 
 const subdomain = 'vscode';
-const zzToken = 'exampletoken';
+let apiToken: TokenResult = {
+    id: '',
+    token: '',
+    expiry: ''
+};
 
 export async function listTokens(): Promise<TokenResult[]> {
+    const armToken = await login();
+    console.log(armToken.accessToken);
     const result = await axios.get(`https://${subdomain}.azureiotcentral.com/api/preview/apiTokens`, {
         headers: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            'Authorization': zzToken
+            authorization: `Bearer ${armToken.accessToken}`
         }
     });
-    return result.data;
+    console.log(result.data);
+    return result.data as TokenResult[];
 }
 
 export async function createToken(tokenId: string): Promise<TokenResult> {
-    const result = await axios.put(`https://${subdomain}.azureiotcentral.com/api/preview/apiTokens/${tokenId}`, {
-        "roles": [
-            {
-                "role": "ca310b8d-2f4a-44e0-a36e-957c202cd8d4" // admin
+    const armToken = await login();
+    const result = await axios.put(`https://${subdomain}.azureiotcentral.com/api/preview/apiTokens/${tokenId}`,
+        {
+            roles: [
+                {
+                    role: Roles.builder
+                }
+            ]
+        },
+        {
+            headers: {
+                authorization: armToken.accessToken
             }
-        ]
-    });
-
-    return result.data as TokenResult;
+        }
+    );
+    console.log(result.data);
+    apiToken = Object.assign(apiToken, result.data);
+    return apiToken;
 }
 
 
 export async function getToken(tokenId: string): Promise<TokenResult> {
-    let result = await axios.get(`https://${subdomain}.azureiotcentral.com/api/preview/apiTokens/${tokenId}`);
+    const result = await axios.get(`https://${subdomain}.azureiotcentral.com/api/preview/apiTokens/${tokenId}`,
+        {
+            headers: {
+                authorization: apiToken.token
+            }
+        });
+    console.log(result.data);
     return result.data as TokenResult;
 }

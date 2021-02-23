@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { connectToCentral } from './service/central';
+import { login } from './service/login';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -24,11 +25,13 @@ export function activate(context: vscode.ExtensionContext) {
 	));
 
 	context.subscriptions.push(vscode.commands.registerCommand(
-		'iotc.test',
+		'iotc.login',
 		async () => {
-			const result = await vscode.window.showInformationMessage('Test', 'Yes', 'No');
+			const result = await vscode.window.showInformationMessage('Do you want to login to Azure and connect IoTCentral?', 'Yes', 'No');
 			if (result === 'Yes') {
-				vscode.window.showInformationMessage('It is yes');
+				await login();
+				await connectToCentral();
+				vscode.window.showInformationMessage('Logged into Azure!');
 			}
 			else {
 				console.log('log no');
@@ -42,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 	 * 2. Provision a device/vscode instance
 	 * 3. Send telemetry
 	 * */
-	connectToCentral();
+	// connectToCentral();
 }
 
 // this method is called when your extension is deactivated

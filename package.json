@@ -21,9 +21,9 @@
 				"title": "Hello World"
 			},
 			{
-				"command": "iotc.test",
+				"command": "iotc.login",
 				"category": "IOTC",
-				"title": "Test"
+				"title": "Login"
 			}
 		]
 	},
@@ -56,6 +56,7 @@
 		"webpack-cli": "^4.4.0"
 	},
 	"dependencies": {
+		"@azure/ms-rest-nodeauth": "^3.0.6",
 		"axios": "^0.21.1"
 	}
 }
