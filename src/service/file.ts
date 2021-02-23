@@ -1,5 +1,9 @@
 import * as os from 'os';
 
 export function getMachineName(): string {
-    return os.hostname();
+    let name = os.hostname().trim();
+    name = name.replace('.', '');
+    name = name.replace('-', '');
+    name = name.replace(' ', '');
+    return name;
 }
