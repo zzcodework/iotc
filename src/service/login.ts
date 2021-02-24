@@ -1,11 +1,17 @@
 import { interactiveLoginWithAuthResponse, AuthResponse, UserTokenCredentials, InteractiveLoginOptions } from '@azure/ms-rest-nodeauth';
-import { time } from 'console';
 import { ArmToken } from '../common/types';
+import * as vscode from 'vscode';
 
 let armToken: ArmToken = {
     accessToken: '',
     expiresIn: 0
 };
+
+function logger(code: string) {
+    console.log(code);
+    vscode.window.showInformationMessage(code);
+    vscode.env.openExternal(vscode.Uri.parse('https://microsoft.com/devicelogin'));
+}
 
 export async function login(): Promise<ArmToken> {
     if (armToken && armToken.accessToken && armToken.expiresIn) {
@@ -17,7 +23,8 @@ export async function login(): Promise<ArmToken> {
     try {
         const options: InteractiveLoginOptions = {
             domain: 'microsoft.onmicrosoft.com',
-            tokenAudience: 'https://apps.azureiotcentral.com'
+            tokenAudience: 'https://apps.azureiotcentral.com',
+            userCodeResponseLogger: logger
         };
 
         const response = await interactiveLoginWithAuthResponse(options) as AuthResponse;

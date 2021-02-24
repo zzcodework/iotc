@@ -19,3 +19,30 @@ export enum Roles {
     operator = 'ae2c9854-393b-4f97-8c42-479d70ce626e',
     dpsAttestation = 'dd2e81c9-e4f0-4cb7-9626-95b1b8ee9a15',
 }
+
+export interface Device {
+    id: string;
+    approved: boolean;
+    description?: string;
+    displayName?: string;
+    instanceOf: string;
+    simulated: boolean;
+    provisioned?: boolean;
+    etag?: string;
+}
+
+export interface DeviceProperties {
+    componentName?: string;
+    manufacturer: string;
+    id: string;
+    name: string;
+    image: string;
+}
+
+export interface DeviceCredentials {
+    idScope: string;
+    symmetricKey: {
+        primaryKey: string;
+        secondaryKey: string;
+    }
+}

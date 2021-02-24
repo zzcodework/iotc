@@ -1,13 +1,9 @@
 import axios from 'axios';
-import { PerformanceObserver } from 'perf_hooks';
+import { subdomain } from '../common/default';
 import { Roles, TokenResult } from '../common/types';
-import { login } from '../service/login';
+import { prepareAuthorizationHeader } from '../common/util';
 
-const oneHour = 1000 * 60 * 60;
-const oneDay = oneHour * 24;
-const oneMonth = oneDay * 30;
-const subdomain = 'vscode';
-let apiToken: TokenResult = {
+export let apiToken: TokenResult = {
     id: '',
     token: '',
     expiry: ''
@@ -20,7 +16,6 @@ export async function listTokens(): Promise<TokenResult[]> {
             authorization: value
         }
     });
-    console.log(result.data.value);
     return result.data.value as TokenResult[];
 }
 
@@ -40,9 +35,8 @@ export async function createToken(tokenId: string): Promise<TokenResult> {
             }
         }
     );
-    console.log(result.data);
     const newToken = result.data as TokenResult;
-    await setToken(newToken);
+    setToken(newToken);
     return newToken;
 }
 
@@ -55,7 +49,6 @@ export async function getToken(tokenId: string): Promise<TokenResult | null> {
                     authorization: value
                 }
             });
-        console.log(result.data);
         return result.data as TokenResult;
     }
     catch (e) {
@@ -74,26 +67,10 @@ export async function deleteToken(tokenId: string): Promise<void> {
                 authorization: value
             }
         });
-    console.log(result.data);
     return result.data;
 }
 
-async function prepareAuthorizationHeader(): Promise<string> {
-    if (apiToken && apiToken.token && apiToken.expiry) {
-        const expiresOn = Date.parse(apiToken.expiry);
-        const delta = expiresOn - Date.now();
-        if (delta > oneMonth) {
-            return apiToken.token;
-        }
-        else if (delta > oneDay) {
-            // regenerate token
-            return apiToken.token;
-        }
-    }
-    const loginResult = await login();
-    return `Bearer ${loginResult && loginResult.accessToken}`;
-}
-
-async function setToken(newToken: TokenResult) {
+function setToken(newToken: TokenResult): TokenResult {
     apiToken = Object.assign(apiToken, newToken);
+    return apiToken;
 }

@@ -13,11 +13,3 @@ You'll need to be able to login to Azure and added to this IoTCentral applicatio
 ## Known Issues
 
 n/a
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 0.1.0
-
-Initial release - connect this vscode extension to IoTCentral application
