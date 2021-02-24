@@ -9,8 +9,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Initial release.
 
 ## [0.2.0]
+
 - Added login message
 - Provision device instance
 
 ## [0.2.1]
+
 - Added simulation
+
+## [0.2.2]
+
+- Able to provision real vscode device instance
