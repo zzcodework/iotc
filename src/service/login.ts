@@ -8,8 +8,11 @@ let armToken: ArmToken = {
 };
 
 function logger(code: string) {
+    const options: vscode.MessageOptions = {
+        modal: true
+    };
     console.log(code);
-    vscode.window.showInformationMessage(code);
+    vscode.window.showInformationMessage(code, options);
     vscode.env.openExternal(vscode.Uri.parse('https://microsoft.com/devicelogin'));
 }
 

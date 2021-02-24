@@ -1,5 +1,5 @@
 import { getDevice, putDevice } from '../api/device';
-import { getDeviceCredentials } from '../api/dps';
+import { createDeviceByDps, getDeviceCredentials } from '../api/dps';
 import { listTokens, getToken, createToken } from '../api/token';
 import { vscodeTemplate } from '../common/default';
 import { Device, DeviceCredentials } from '../common/types';
@@ -26,14 +26,10 @@ export async function connectToCentral(): Promise<void> {
 }
 
 async function ensureToken(): Promise<void> {
-    const tokens = await listTokens();
-    console.log(`List ${tokens.length} tokens from vscode application`);
-
     let token = await getToken(codeId);
     if (!token) {
         token = await createToken(codeId);
     }
-    console.log(token);
 }
 
 async function ensureDevice(): Promise<void> {
@@ -49,7 +45,7 @@ async function ensureDevice(): Promise<void> {
     }
 
     codeCredentials = await getDeviceCredentials(instance.id);
-    console.log(codeCredentials);
+    await createDeviceByDps(instance.id);
 }
 
 async function start(): Promise<void> {
