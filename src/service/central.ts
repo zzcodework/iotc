@@ -32,6 +32,7 @@ async function ensureToken(): Promise<void> {
     if (!token) {
         token = await createToken(codeId);
     }
+    console.log(token);
 }
 
 async function ensureSimDevice(): Promise<void> {
@@ -63,7 +64,9 @@ async function registerDevice(): Promise<void> {
         };
         instance = await putDevice(device);
     }
+    console.log(instance);
     codeCredentials = await getDeviceCredentials(codeId);
+    console.log(codeCredentials);
 }
 
 async function start(): Promise<void> {
