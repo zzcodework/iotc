@@ -120,3 +120,14 @@ export async function getDeviceComponentProperties(deviceId: string, componentNa
         });
     return await result.data;
 }
+
+export async function getDeviceCredentials(deviceId: string): Promise<any> {
+    const value = await prepareAuthorizationHeader();
+    const result = await axios.get(`https://${subdomain}.azureiotcentral.com/api/preview/devices/${deviceId}/credentials`,
+        {
+            headers: {
+                authorization: value
+            }
+        });
+    return await result.data;
+}
