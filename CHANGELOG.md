@@ -20,3 +20,15 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.2.2]
 
 - Able to provision real vscode device instance
+
+## [0.2.3]
+
+- Able to send raw data
+
+## [0.2.4]
+
+- Telemetry associated with model
+
+## [0.2.5]
+
+- Fix telemetry

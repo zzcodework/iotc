@@ -7,5 +7,6 @@ export const subdomain = 'vscode';
 export const vscodeTemplate = {
     id: 'dtmi:zyprqt7wqcw:n5mrwvbjpuc',
     solutionModelId: 'dtmi:zyprqt7wqcw:xrgufh3yfz',
-    capabilityModelId: 'dtmi:vscode:VSCode1t3;2'
+    capabilityModelId: 'dtmi:vscode:VSCode1t3;2',
+    componentName: 'VSCode4fo'
 };
