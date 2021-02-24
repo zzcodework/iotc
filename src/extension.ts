@@ -11,6 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (result === 'Yes') {
 				await login();
 				await connectToCentral();
+				vscode.window.showInformationMessage('Connected to IoTCentral application https://vscode.azureiotcentral.com');
 			}
 			else {
 				console.log('log no');
