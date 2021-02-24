@@ -17,6 +17,7 @@ export let codeCredentials: DeviceCredentials = {
 export async function connectToCentral(): Promise<void> {
     try {
         await ensureToken();
+        await ensureSimDevice();
         await ensureDevice();
         start();
     }
@@ -29,6 +30,20 @@ async function ensureToken(): Promise<void> {
     let token = await getToken(codeId);
     if (!token) {
         token = await createToken(codeId);
+    }
+}
+
+async function ensureSimDevice(): Promise<void> {
+    const simInstanceId = `${codeId}-sim`;
+    let instance = await getDevice(simInstanceId);
+    if (!instance) {
+        const device: Device = {
+            id: simInstanceId,
+            approved: true,
+            instanceOf: vscodeTemplate.id,
+            simulated: true
+        };
+        instance = await putDevice(device);
     }
 }
 
