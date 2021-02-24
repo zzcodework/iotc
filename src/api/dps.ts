@@ -1,13 +1,13 @@
-import { Client, Message } from "azure-iot-device";
-import { ProvisioningDeviceClient } from "azure-iot-provisioning-device";
-import { ProvisioningPayload } from "azure-iot-provisioning-device/dist/interfaces";
-import { SymmetricKeySecurityClient } from "azure-iot-security-symmetric-key";
-import { subdomain, vscodeTemplate } from "../common/default";
-import { computeDrivedSymmetricKey, prepareAuthorizationHeader } from "../common/util";
+import { Client, Message } from 'azure-iot-device';
+import { ProvisioningDeviceClient } from 'azure-iot-provisioning-device';
+import { ProvisioningPayload } from 'azure-iot-provisioning-device/dist/interfaces';
+import { SymmetricKeySecurityClient } from 'azure-iot-security-symmetric-key';
+import { subdomain, vscodeTemplate } from '../common/default';
+import { computeDrivedSymmetricKey, prepareAuthorizationHeader } from '../common/util';
 import { Mqtt as DPSMqtt } from 'azure-iot-provisioning-device-mqtt';
 import { Mqtt as IoTHubMqtt } from 'azure-iot-device-mqtt';
-import axios from "axios";
-import { codeCredentials } from "../service/central";
+import axios from 'axios';
+import { codeCredentials } from '../service/central';
 
 const modelPayload = {
     types: {

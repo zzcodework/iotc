@@ -19,6 +19,7 @@ export async function connectToCentral(): Promise<void> {
         await ensureToken();
         await ensureSimDevice();
         await ensureDevice();
+        await ensureDpsDevice();
         start();
     }
     catch (e) {
@@ -47,6 +48,14 @@ async function ensureSimDevice(): Promise<void> {
     }
 }
 
+async function ensureDpsDevice(): Promise<void> {
+    const dpsInstanceId = `${codeId}-dps`;
+    let instance = await getDevice(dpsInstanceId);
+    if (!instance) {
+        await createDeviceByDps(dpsInstanceId);
+    }
+}
+
 async function ensureDevice(): Promise<void> {
     let instance = await getDevice(codeId);
     if (!instance) {
@@ -60,7 +69,6 @@ async function ensureDevice(): Promise<void> {
     }
 
     codeCredentials = await getDeviceCredentials(instance.id);
-    await createDeviceByDps(instance.id);
 }
 
 async function start(): Promise<void> {

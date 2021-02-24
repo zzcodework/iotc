@@ -9,7 +9,7 @@ let armToken: ArmToken = {
 
 function logger(code: string) {
     const options: vscode.MessageOptions = {
-        modal: true
+        modal: false
     };
     console.log(code);
     vscode.window.showInformationMessage(code, options);

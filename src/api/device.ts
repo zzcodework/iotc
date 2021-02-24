@@ -1,7 +1,7 @@
-import axios from "axios";
-import { subdomain } from "../common/default";
+import axios from 'axios';
+import { subdomain } from '../common/default';
 import { Device, DeviceProperties } from '../common/types';
-import { prepareAuthorizationHeader } from "../common/util";
+import { prepareAuthorizationHeader } from '../common/util';
 
 export async function putDevice(device: Device): Promise<Device> {
     const value = await prepareAuthorizationHeader();
