@@ -32,3 +32,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.2.5]
 
 - Fix telemetry
+
+## [0.2.6]
+
+- Added health telemetry
+- Updated new device model
+- Updated command
+- Use real data

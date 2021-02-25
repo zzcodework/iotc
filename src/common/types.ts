@@ -46,3 +46,15 @@ export interface DeviceCredentials {
         secondaryKey: string;
     }
 }
+
+export interface MessageData {
+    open?: number;
+    close?: number;
+    file?: number;
+    line?: number;
+}
+
+export interface HealthData {
+    status?: string;
+    heartbeat?: number;
+}

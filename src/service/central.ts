@@ -1,8 +1,9 @@
 import { getDevice, getDeviceCredentials, putDevice } from '../api/device';
 import { createDeviceByDps } from '../api/dps';
+import { reportHealth, updateTelemetries, testTelemetries } from '../api/telemetry';
 import { getToken, createToken } from '../api/token';
-import { vscodeTemplate } from '../common/default';
-import { Device, DeviceCredentials } from '../common/types';
+import { codeTemplate } from '../common/default';
+import { Device, DeviceCredentials, MessageData } from '../common/types';
 import { getMachineName } from './file';
 
 export const codeId = getMachineName();
@@ -17,10 +18,8 @@ export let codeCredentials: DeviceCredentials = {
 export async function connectToCentral(): Promise<void> {
     try {
         await ensureToken();
-        await ensureSimDevice();
         await registerDevice();
         await provisionDevice();
-        start();
     }
     catch (e) {
         console.error(e);
@@ -42,7 +41,7 @@ async function ensureSimDevice(): Promise<void> {
         const device: Device = {
             id: simInstanceId,
             approved: true,
-            instanceOf: vscodeTemplate.id,
+            instanceOf: codeTemplate.id,
             simulated: true
         };
         instance = await putDevice(device);
@@ -59,7 +58,7 @@ async function registerDevice(): Promise<void> {
         const device: Device = {
             id: codeId,
             approved: true,
-            instanceOf: vscodeTemplate.id,
+            instanceOf: codeTemplate.id,
             simulated: false
         };
         instance = await putDevice(device);
@@ -69,10 +68,31 @@ async function registerDevice(): Promise<void> {
     console.log(codeCredentials);
 }
 
-async function start(): Promise<void> {
-
+export async function health(): Promise<void> {
+    setInterval(async () => {
+        await reportHealth();
+    },
+        60 * 1000);
 }
 
-async function stop(): Promise<void> {
+export async function start(): Promise<void> {
+    await connectToCentral();
+    await health();
+    const msg: MessageData = {
+        open: 1,
+    };
+    await updateTelemetries(msg);
+}
 
+export async function stop(): Promise<void> {
+    await connectToCentral();
+    const msg: MessageData = {
+        close: 1
+    };
+    await updateTelemetries(msg);
+}
+
+export async function test(): Promise<void> {
+    await connectToCentral();
+    await testTelemetries();
 }

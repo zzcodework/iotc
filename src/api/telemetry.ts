@@ -1,32 +1,39 @@
-import { Client, Message } from 'azure-iot-device';
-import { vscodeTemplate } from '../common/default';
+import { Message } from 'azure-iot-device';
+import { codeTemplate } from '../common/default';
+import { MessageData, HealthData } from '../common/types';
+import { randomNumber, randomStrings } from '../common/util';
+import { iothubClient } from './dps';
 
-const messageData = {
-    Open: 1,
-    Close: 2,
-    File: 3,
-    Line: 4,
-    Time: Date.now()
-};
-
-const propertyData = {
-    id: 'aaa',
-    name: 'bbb',
-    version: 'ccc'
-};
-
-export async function updateProperties(iothubClient: Client): Promise<void> {
+export async function updateTelemetries(messageData: MessageData): Promise<void> {
     const message = new Message(JSON.stringify(messageData));
     message.contentType = 'application/json';
-    message.properties.add('$.sub', vscodeTemplate.componentName);
+    message.properties.add('$.sub', codeTemplate.telemetryComponentName);
     const result = await iothubClient.sendEvent(message);
     console.log(result);
 }
 
-export async function updateTelemetries(iothubClient: Client): Promise<void> {
-    const message = new Message(JSON.stringify({ 'Open': 111, 'Close': 222 }));
+export async function reportHealth(): Promise<void> {
+    const healthData: HealthData = {
+        status: randomStrings(5),
+        heartbeat: randomNumber()
+    };
+    const message = new Message(JSON.stringify(healthData));
     message.contentType = 'application/json';
-    message.properties.add('$.sub', vscodeTemplate.componentName);
+    message.properties.add('$.sub', codeTemplate.healthComponentName);
+    const result = await iothubClient.sendEvent(message);
+    console.log(result);
+}
+
+export async function testTelemetries(): Promise<void> {
+    const messageData: MessageData = {
+        open: randomNumber(),
+        close: randomNumber(),
+        file: randomNumber(),
+        line: randomNumber()
+    };
+    const message = new Message(JSON.stringify(messageData));
+    message.contentType = 'application/json';
+    message.properties.add('$.sub', codeTemplate.telemetryComponentName);
     const result = await iothubClient.sendEvent(message);
     console.log(result);
 }

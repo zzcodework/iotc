@@ -4,9 +4,10 @@ export const oneMonth = oneDay * 30;
 
 export const subdomain = 'vscode';
 
-export const vscodeTemplate = {
-    id: 'dtmi:zyprqt7wqcw:n5mrwvbjpuc',
-    solutionModelId: 'dtmi:zyprqt7wqcw:xrgufh3yfz',
-    capabilityModelId: 'dtmi:vscode:VSCode1t3;2',
-    componentName: 'VSCode4fo'
+export const codeTemplate = {
+    id: 'dtmi:modelDefinition:svu0bzafd:ihl4ticus',
+    solutionModelId: 'dtmi:solutionModel:modelDefinition:svu0bzafd:dn4komumw9',
+    capabilityModelId: 'dtmi:vscode:Productivity2mp;1',
+    telemetryComponentName: 'Productivity3d2',
+    healthComponentName: 'Productivity52a'
 };

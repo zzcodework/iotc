@@ -4,17 +4,12 @@ import { SymmetricKeySecurityClient } from 'azure-iot-security-symmetric-key';
 import { Mqtt as DPSMqtt } from 'azure-iot-provisioning-device-mqtt';
 import { Mqtt as IoTHubMqtt } from 'azure-iot-device-mqtt';
 import { codeCredentials } from '../service/central';
-import { updateProperties, updateTelemetries } from './telemetry';
+
+export let iothubClient: Client;
 
 export async function createDeviceByDps(deviceId: string): Promise<void> {
-    const iothubClient = await registerDevice(deviceId);
+    iothubClient = await registerDevice(deviceId);
     console.log(iothubClient);
-
-    setInterval(() => {
-        updateTelemetries(iothubClient);
-        updateProperties(iothubClient);
-    },
-        10 * 1000);
 }
 
 async function registerDevice(deviceId: string): Promise<Client> {
@@ -37,7 +32,6 @@ async function registerDevice(deviceId: string): Promise<Client> {
                         console.error(err);
                         reject(err);
                     } else {
-
                         resolve(iothubClient);
                     }
                 });
