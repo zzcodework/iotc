@@ -1,5 +1,5 @@
 import { getDevice, getDeviceCredentials, putDevice } from '../api/device';
-import { createDeviceByDps } from '../api/dps';
+import { createDeviceByDps, iothubClient } from '../api/dps';
 import { reportHealth, updateTelemetries, testTelemetries } from '../api/telemetry';
 import { getToken, createToken } from '../api/token';
 import { codeTemplate } from '../common/default';
@@ -18,8 +18,10 @@ export let codeCredentials: DeviceCredentials = {
 export async function connectToCentral(): Promise<void> {
     try {
         await ensureToken();
-        await registerDevice();
-        await provisionDevice();
+        const device = await createDevice();
+        if (!device.provisioned || !iothubClient) {
+            await provisionDevice();
+        }
     }
     catch (e) {
         console.error(e);
@@ -52,7 +54,7 @@ async function provisionDevice(): Promise<void> {
     await createDeviceByDps(codeId);
 }
 
-async function registerDevice(): Promise<void> {
+async function createDevice(): Promise<Device> {
     let instance = await getDevice(codeId);
     if (!instance) {
         const device: Device = {
@@ -66,6 +68,7 @@ async function registerDevice(): Promise<void> {
     console.log(instance);
     codeCredentials = await getDeviceCredentials(codeId);
     console.log(codeCredentials);
+    return instance;
 }
 
 export async function health(): Promise<void> {

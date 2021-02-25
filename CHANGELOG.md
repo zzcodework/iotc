@@ -39,3 +39,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Updated new device model
 - Updated command
 - Use real data
+
+## [0.3.0]
+
+- Finished all three commands

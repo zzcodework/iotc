@@ -2,7 +2,7 @@
 	"name": "iotc",
 	"displayName": "iotcentral",
 	"description": "iotcentral vscode extension",
-	"version": "0.2.6",
+	"version": "0.3.0",
 	"publisher": "ZZ",
 	"repository": "https://github.com/zzcodework/iotc",
 	"engines": {
